@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             BtnExport = new Button();
             label1 = new Label();
             TxtCompanyName = new TextBox();
@@ -152,6 +152,7 @@
             BtnSave.TabIndex = 7;
             BtnSave.Text = "Save";
             BtnSave.UseVisualStyleBackColor = false;
+            BtnSave.Click += BtnSave_Click;
             BtnSave.MouseLeave += BtnSave_MouseLeave;
             BtnSave.MouseHover += BtnSave_MouseHover;
             // 
@@ -174,25 +175,25 @@
             DgvMain.AllowUserToDeleteRows = false;
             DgvMain.AllowUserToResizeColumns = false;
             DgvMain.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            DgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = SystemColors.Control;
+            dataGridViewCellStyle12.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            DgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             DgvMain.ColumnHeadersHeight = 45;
             DgvMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             DgvMain.Columns.AddRange(new DataGridViewColumn[] { ColSrNo, ColDescription, ColHsn, ColGst, ColPcs, ColSalePrice, ColRate, ColDiscountP, ColAmount });
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle11.BackColor = SystemColors.Window;
-            dataGridViewCellStyle11.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            DgvMain.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle22.BackColor = SystemColors.Window;
+            dataGridViewCellStyle22.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle22.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle22.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = DataGridViewTriState.False;
+            DgvMain.DefaultCellStyle = dataGridViewCellStyle22;
             DgvMain.Location = new Point(2, 3);
             DgvMain.MultiSelect = false;
             DgvMain.Name = "DgvMain";
@@ -201,14 +202,15 @@
             DgvMain.RowTemplate.Height = 33;
             DgvMain.Size = new Size(1195, 428);
             DgvMain.TabIndex = 0;
+            DgvMain.KeyDown += DgvMain_KeyDown;
             // 
             // ColSrNo
             // 
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle2.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            ColSrNo.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle13.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle13.Format = "N0";
+            dataGridViewCellStyle13.NullValue = null;
+            ColSrNo.DefaultCellStyle = dataGridViewCellStyle13;
             ColSrNo.HeaderText = "Sr No.";
             ColSrNo.Name = "ColSrNo";
             ColSrNo.ReadOnly = true;
@@ -216,78 +218,78 @@
             // 
             // ColDescription
             // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            ColDescription.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.False;
+            ColDescription.DefaultCellStyle = dataGridViewCellStyle14;
             ColDescription.HeaderText = "Description Of Good";
             ColDescription.Name = "ColDescription";
             ColDescription.Width = 250;
             // 
             // ColHsn
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = null;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            ColHsn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle15.Format = "N0";
+            dataGridViewCellStyle15.NullValue = null;
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
+            ColHsn.DefaultCellStyle = dataGridViewCellStyle15;
             ColHsn.HeaderText = "HSN";
             ColHsn.Name = "ColHsn";
             // 
             // ColGst
             // 
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ColGst.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ColGst.DefaultCellStyle = dataGridViewCellStyle16;
             ColGst.HeaderText = "GST";
             ColGst.Name = "ColGst";
             // 
             // ColPcs
             // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle6.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            ColPcs.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle17.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle17.Format = "N0";
+            dataGridViewCellStyle17.NullValue = null;
+            ColPcs.DefaultCellStyle = dataGridViewCellStyle17;
             ColPcs.HeaderText = "Pcs";
             ColPcs.Name = "ColPcs";
             ColPcs.Width = 50;
             // 
             // ColSalePrice
             // 
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle7.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = null;
-            ColSalePrice.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle18.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle18.Format = "N2";
+            dataGridViewCellStyle18.NullValue = null;
+            ColSalePrice.DefaultCellStyle = dataGridViewCellStyle18;
             ColSalePrice.HeaderText = "Sale Price";
             ColSalePrice.Name = "ColSalePrice";
             // 
             // ColRate
             // 
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle8.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.Format = "N2";
-            ColRate.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle19.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle19.Format = "N2";
+            ColRate.DefaultCellStyle = dataGridViewCellStyle19;
             ColRate.HeaderText = "Rate";
             ColRate.Name = "ColRate";
             // 
             // ColDiscountP
             // 
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle9.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.Format = "N2";
-            ColDiscountP.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle20.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle20.Format = "N2";
+            ColDiscountP.DefaultCellStyle = dataGridViewCellStyle20;
             ColDiscountP.HeaderText = "Disc %";
             ColDiscountP.Name = "ColDiscountP";
             // 
             // ColAmount
             // 
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle10.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle10.Format = "N2";
-            ColAmount.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle21.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle21.Format = "N2";
+            ColAmount.DefaultCellStyle = dataGridViewCellStyle21;
             ColAmount.HeaderText = "Amount";
             ColAmount.Name = "ColAmount";
             ColAmount.Width = 130;
@@ -379,12 +381,14 @@
             // TxtInvoiceNo
             // 
             TxtInvoiceNo.Enabled = false;
+            TxtInvoiceNo.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             TxtInvoiceNo.Location = new Point(4, 22);
             TxtInvoiceNo.Margin = new Padding(3, 2, 3, 2);
             TxtInvoiceNo.Name = "TxtInvoiceNo";
             TxtInvoiceNo.ReadOnly = true;
-            TxtInvoiceNo.Size = new Size(110, 23);
+            TxtInvoiceNo.Size = new Size(110, 22);
             TxtInvoiceNo.TabIndex = 8;
+            TxtInvoiceNo.TextAlign = HorizontalAlignment.Right;
             // 
             // panel2
             // 
