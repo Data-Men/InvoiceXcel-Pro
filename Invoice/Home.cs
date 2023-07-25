@@ -10,10 +10,69 @@ namespace Invoice
         {
             InitializeComponent();
         }
+        Dictionary<string,string> states = new Dictionary<string, string>();
 
         private void Home_Load(object sender, EventArgs e)
         {
+            //Adding Value in Dictionary
+            states.Add("Andhra Pradesh", "37");
+            states.Add("Arunachal Pradesh", "12");
+            states.Add("Assam", "18");
+            states.Add("Bihar", "10");
+            states.Add("Chattisgarh", "22");
+            states.Add("Delhi", "07");
+            states.Add("Goa", "30");
+            states.Add("Gujarat", "24");
+            states.Add("Haryana", "06");
+            states.Add("Himachal Pradesh", "02");
+            states.Add("Jammu and Kashmir", "01");
+            states.Add("Jharkhand", "20");
+            states.Add("Karnataka", "29");
+            states.Add("Kerala", "32");
+            states.Add("Lakshadweep Islands", "31");
+            states.Add("Madhya Pradesh", "23");
+            states.Add("Maharashtra", "27");
+            states.Add("Manipur", "14");
+            states.Add("Meghalaya", "17");
+            states.Add("Mizoram", "15");
+            states.Add("Nagaland", "13");
+            states.Add("Odisha", "21");
+            states.Add("Pondicherry", "34");
+            states.Add("Punjab", "03");
+            states.Add("Rajasthan", "08");
+            states.Add("Sikkim", "11");
+            states.Add("Tamil Nadu", "33");
+            states.Add("Telangana", "36");
+            states.Add("Tripura", "16");
+            states.Add("Uttar Pradesh", "09");
+            states.Add("Uttarakhand", "05");
+            states.Add("West Bengal", "19");
 
+            //add Value and Properties To combobox 
+            CmbState.Sorted = true;
+            //CmbState.DropDownHeight = 150;
+            CmbState.DroppedDown = false;
+            CmbState.AutoCompleteSource = AutoCompleteSource.ListItems;
+            CmbState.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            CmbState.Items.AddRange(states.Keys.ToArray());
+
+
+        }
+
+        private void CmbState_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+            if(CmbState.SelectedIndex != -1)
+                {
+                    TxtStateCode.Text = states[CmbState.SelectedItem.ToString()];
+                } 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -180,6 +239,7 @@ namespace Invoice
             oResizeRange = (Excel.Range)oWS.Rows.get_Item(10, Missing.Value);
             oWS.Shapes.Item("Chart 1").Top = (float)(double)oResizeRange.Top;
             oResizeRange = (Excel.Range)oWS.Columns.get_Item(2, Missing.Value);
+
             oWS.Shapes.Item("Chart 1").Left = (float)(double)oResizeRange.Left;
         }
     }
