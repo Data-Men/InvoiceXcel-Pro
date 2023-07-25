@@ -1,6 +1,5 @@
 using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Reflection;
 namespace Invoice
 {
     public partial class Home : Form
@@ -10,8 +9,7 @@ namespace Invoice
         {
             InitializeComponent();
         }
-        Dictionary<string,string> states = new Dictionary<string, string>();
-
+        Dictionary<string, string> states = new Dictionary<string, string>();
         private void Home_Load(object sender, EventArgs e)
         {
             //Adding Value in Dictionary
@@ -50,23 +48,28 @@ namespace Invoice
 
             //add Value and Properties To combobox 
             CmbState.Sorted = true;
-            //CmbState.DropDownHeight = 150;
-            CmbState.DroppedDown = false;
             CmbState.AutoCompleteSource = AutoCompleteSource.ListItems;
             CmbState.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             CmbState.Items.AddRange(states.Keys.ToArray());
 
-
+            //Data Grid View
+            //Total Row
+            DgvMain.Rows.Add();
+            DgvMain.Rows[0].ReadOnly = true;
+            //First Row
+            DgvMain.Rows.Add();
+            DgvMain[0, 1].Value = 1;
+            DgvMain.Rows[1].Cells[1].Selected = true;
         }
 
         private void CmbState_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-            if(CmbState.SelectedIndex != -1)
+                if (CmbState.SelectedIndex != -1 && CmbState.SelectedItem != null)
                 {
                     TxtStateCode.Text = states[CmbState.SelectedItem.ToString()];
-                } 
+                }
             }
             catch (Exception)
             {
@@ -75,7 +78,7 @@ namespace Invoice
             }
         }
 
-        private void button1_Click(object sender, System.EventArgs e)
+        private void BtnExport_Click(object sender, System.EventArgs e)
         {
             Excel.Application oXL;
             Excel._Workbook oWB;
@@ -241,6 +244,47 @@ namespace Invoice
             oResizeRange = (Excel.Range)oWS.Columns.get_Item(2, Missing.Value);
 
             oWS.Shapes.Item("Chart 1").Left = (float)(double)oResizeRange.Left;
+        }
+
+        private void BtnSave_MouseHover(object sender, EventArgs e)
+        {
+
+            BtnSave.BackColor = System.Drawing.Color.Green;
+            BtnSave.ForeColor = System.Drawing.Color.White;
+        }
+
+        private void BtnSave_MouseLeave(object sender, EventArgs e)
+        {
+            BtnSave.BackColor = System.Drawing.Color.Gainsboro;
+            BtnSave.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void BtnDelete_MouseHover(object sender, EventArgs e)
+        {
+            BtnDelete.BackColor = System.Drawing.Color.DarkRed;
+            BtnDelete.ForeColor = System.Drawing.Color.White;
+        }
+
+        private void BtnDelete_MouseLeave(object sender, EventArgs e)
+        {
+            BtnDelete.BackColor = System.Drawing.Color.Gainsboro;
+            BtnDelete.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            TxtAddress.Text = "";
+            TxtCompanyName.Text = "";
+            TxtEmail.Text = "";
+            DatePicker.ResetText();
+
+            DgvMain.Rows.Clear();
+            DgvMain.Rows.Add();
+            DgvMain.Rows[0].ReadOnly = true;
+            //First Row
+            DgvMain.Rows.Add();
+            DgvMain[0, 1].Value = 1;
+            DgvMain.Rows[1].Cells[1].Selected = true;
         }
     }
 }
