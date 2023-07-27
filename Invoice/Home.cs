@@ -1,3 +1,4 @@
+using Microsoft.Office.Interop.Excel;
 using Microsoft.VisualBasic;
 using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -65,7 +66,7 @@ namespace Invoice
             try{
                 int xRow = 1;
                 int xCol = 1;
-
+                int dataFillStartRow;
                 int Srno, Description, Hsn, Gst, Pcs, SPrice, Rate, Per,Discount, Amount;
                 //Start Excel and get Application object.
                 oXL = new Excel.Application();
@@ -153,7 +154,7 @@ namespace Invoice
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
                 xRow = 13;
-                //Grid Data
+                //Grid Column
                 xRow += 1;
 
                 Srno = xCol;
@@ -177,7 +178,7 @@ namespace Invoice
 
                 xCol += 1;
                 SPrice= xCol;
-                oSheet.Cells[xRow, Pcs] = "Sale Price";
+                oSheet.Cells[xRow, SPrice] = "Sale Price";
 
                 xCol += 1;
                 Rate= xCol;
@@ -195,6 +196,77 @@ namespace Invoice
                 Amount= xCol;
                 oSheet.Cells[xRow, Amount] = "Amount";
 
+                //Data Filling
+                xRow+= 1;
+                dataFillStartRow = xRow; //WIll require later
+                float Igst=0, Sgst=0;
+                foreach (DataGridViewRow dgRow   in DgvMain.Rows)
+                {
+                    if (dgRow.Index>0)
+                    {
+                        oSheet.Cells[xRow, Srno] = dgRow.Cells[ColSrNo.Index].Value;
+                        oSheet.Cells[xRow, Description] = dgRow.Cells[ColDescription.Index].Value;
+                        oSheet.Cells[xRow, Hsn] = dgRow.Cells[ColHsn.Index].Value;
+                        oSheet.Cells[xRow, Gst] = dgRow.Cells[ColGst.Index].Value;
+                        oSheet.Cells[xRow, Pcs] = dgRow.Cells[ColPcs.Index].Value;
+                        oSheet.Cells[xRow, SPrice] = dgRow.Cells[ColSalePrice.Index].Value;
+                        oSheet.Cells[xRow, Rate] = dgRow.Cells[ColRate.Index].Value;
+                        oSheet.Cells[xRow, Per] = "";
+                        oSheet.Cells[xRow, Discount] = isNull(dgRow.Cells[ColDiscountP.Index].Value) ? 0 : dgRow.Cells[ColDiscountP.Index].Value.ToString() + "%";
+                        
+                        oSheet.Cells[xRow, Amount] = dgRow.Cells[ColAmount.Index].Value;
+
+                        if (true)
+                        {
+                        Sgst += float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 200;       
+                        }
+                        else
+                        {
+                            Sgst += float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
+                        }
+
+                        xRow += 1;
+
+                    }
+                }
+                
+                //SGST OR IGST
+                if (true)
+                {
+                    xRow += 1;
+                    oSheet.Cells[xRow, Description] = "SGST";
+                    oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                    oSheet.Cells[xRow, Amount] = Sgst;
+                    xRow += 1;
+                    oSheet.Cells[xRow, Description] = "CGST";
+                    oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                    oSheet.Cells[xRow, Amount] = Sgst;
+                } else
+                {
+                    xRow += 1;
+                    oSheet.Cells[xRow, Description] = "IGST";
+                    oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                    oSheet.Cells[xRow, Amount] = Igst;
+                }
+
+                xRow += 1;
+                oSheet.Cells[xRow, Description] = "Round Off(+)";
+                oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+
+
+                //Total Calculation
+                xRow += 2;
+
+                //Total Amount
+                oSheet.Cells[xRow, Description] = "Total";
+                oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                oSheet.Cells[xRow, Amount] = "=SUM("+"J" + dataFillStartRow.ToString()+":" +"J" + (xRow - 1).ToString()+")";
+                oSheet.Cells[xRow, Amount].Formate = "$0.00";
+                //Total PCs
+                oSheet.Cells[xRow, Amount]= "=SUM(" + "E" + dataFillStartRow.ToString() + ":" + "E" + (xRow - 1).ToString() + ")";
+
+                //
+                oSheet.get_Range("A2", "J14").Cells.Borders.Weight = Excel.XlBorderWeight.xlMedium;
                 #endregion
 
 
@@ -239,7 +311,7 @@ namespace Invoice
                 //oRng.NumberFormat = "$0.00";
 
                 //AutoFit columns A:D.
-                oRng = oSheet.get_Range("A1", "A110");
+                oRng = oSheet.get_Range("A1", "J30");
                 oRng.EntireColumn.AutoFit();
 
 
@@ -385,6 +457,16 @@ namespace Invoice
             states.Add("West Bengal", "19");
         }
 
+        private Boolean isNull(Object x)
+        {
+            if (x == null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
         private Int32 DataReadWrite()
         {
             string directoryPath = @"C:\Invoice\";
