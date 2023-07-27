@@ -261,54 +261,125 @@ namespace Invoice
                 oSheet.Cells[xRow, Description] = "Total";
                 oSheet.Cells[xRow].HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
                 oSheet.Cells[xRow, Amount] = "=SUM("+"J" + dataFillStartRow.ToString()+":" +"J" + (xRow - 1).ToString()+")";
-                oSheet.Cells[xRow, Amount].Formate = "$0.00";
+                //oSheet.Cells[xRow, Amount].NumberFormat = "0.00";
                 //Total PCs
-                oSheet.Cells[xRow, Amount]= "=SUM(" + "E" + dataFillStartRow.ToString() + ":" + "E" + (xRow - 1).ToString() + ")";
-
+                oSheet.Cells[xRow, Pcs]= "=SUM(" + "E" + dataFillStartRow.ToString() + ":" + "E" + (xRow - 1).ToString() + ")";
+                oSheet.get_Range("A"+xRow.ToString(), "J"+xRow.ToString()).Font.Bold = true;
                 //
-                oSheet.get_Range("A2", "J14").Cells.Borders.Weight = Excel.XlBorderWeight.xlMedium;
+
+                //Formating Above data
+                xRow += 1;
+                oSheet.Cells[xRow, Srno] = "Amount Chargeable (in words)";
+                oSheet.get_Range("A" + xRow.ToString(), "J" + xRow.ToString()).Merge();
+                
+                xRow += 1;
+                oSheet.Cells[xRow, Srno] = "Indian Rupees Twenty Three Thousand Only";
+                oSheet.get_Range("A" + xRow.ToString(), "J" + xRow.ToString()).Merge();
+                oSheet.get_Range("A" + (xRow-1).ToString(), "J" + xRow.ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+
+                xRow += 1;
+                oSheet.Cells[xRow, Srno] = "HSN/SAC";
+                oSheet.get_Range("A" + xRow.ToString(), "C" + (xRow+2).ToString()).Merge();
+                oSheet.get_Range("A" + (xRow).ToString(), "J" + (xRow + 2).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+
+                oSheet.Cells[xRow, Gst] = "Taxable Value";
+                oSheet.get_Range("D" + xRow.ToString(), "D" + (xRow + 2).ToString()).Merge();
+                oSheet.get_Range("D" + (xRow).ToString(), "D" + (xRow + 2).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+
+                //Central tax
+                if (true)
+                {
+                    oSheet.Cells[xRow, Pcs] = "Central Tax";
+                    oSheet.get_Range("E" + xRow.ToString(), "F" + (xRow).ToString()).Merge();
+                    oSheet.get_Range("E" + (xRow).ToString(), "E" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+                    
+                    oSheet.Cells[xRow+1, Pcs] = "Rate";
+                    oSheet.Cells[xRow+1, SPrice] = "Amount";
+                    oSheet.get_Range("E" + (xRow+1).ToString(), "E" + (xRow+2).ToString()).Merge();
+                    oSheet.get_Range("F" + (xRow + 1).ToString(), "F" + (xRow + 2).ToString()).Merge();
+
+
+                    oSheet.Cells[xRow, Rate] = "State Tax";
+                    oSheet.get_Range("G" + xRow.ToString(), "I" + (xRow).ToString()).Merge();
+                    oSheet.get_Range("G" + (xRow).ToString(), "I" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+
+                    oSheet.Cells[xRow + 1, Rate] = "Rate";
+                    oSheet.Cells[xRow + 1, Per] = "Amount";
+                    oSheet.get_Range("G" + (xRow+1).ToString(), "G" + (xRow+2).ToString()).Merge();
+                    oSheet.get_Range("H" + (xRow + 1).ToString(), "I" + (xRow + 2).ToString()).Merge();
+
+                }
+                else
+                {
+                    oSheet.Cells[xRow, Pcs] = "Inter State Tax";
+                    oSheet.get_Range("E" + xRow.ToString(), "I" + (xRow).ToString()).Merge();
+                    oSheet.get_Range("E" + (xRow).ToString(), "I" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+                }
+
+                //Total Tax
+                oSheet.Cells[xRow, Amount] = "Total Tax Amount";
+                oSheet.get_Range("J" + xRow.ToString(), "J" + (xRow+2).ToString()).Merge();
+                oSheet.get_Range("J" + (xRow).ToString(), "J" + (xRow+2).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+
+                //Tax Calculation
+                        xRow += 3;
+                int taxStartRow = xRow;
+                foreach (DataGridViewRow dgRow in DgvMain.Rows)
+                {
+                    if (dgRow.Index > 0)
+                    {
+                        oSheet.Cells[xRow, Srno] = dgRow.Cells[ColHsn.Index].Value;
+                        oSheet.get_Range("A" + xRow.ToString(), "C" + xRow .ToString()).Merge();
+
+                        oSheet.Cells[xRow, Gst] = dgRow.Cells[ColAmount.Index].Value;
+                        if (true)
+                        {
+                            //central
+                            oSheet.Cells[xRow, Pcs] = float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 2;
+                            oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 200;
+                            //state
+                            oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 2;
+                            oSheet.Cells[xRow, Per] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 200;
+
+                            //total
+                            oSheet.Cells[xRow, Amount] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
+
+                        }
+                        else
+                        {
+                            oSheet.Cells[xRow, Pcs] =dgRow.Cells[ColGst.Index].Value;
+                            oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
+                        }
+
+
+                        xRow += 1;
+                    }
+                }
+
+                //Tax Total 
+                oSheet.Cells[xRow, Srno] = "Total";
+                oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
+
+                
+                oSheet.Cells[xRow, Gst] = "=SUM(" + "D" + taxStartRow.ToString() + ":" + "D" + (xRow - 1).ToString() + ")";
+
+                if (true)
+                {
+                    oSheet.Cells[xRow, SPrice] = "=SUM(" + "F" + taxStartRow.ToString() + ":" + "F" + (xRow - 1).ToString() + ")";
+                    oSheet.Cells[xRow, Pcs] = "=SUM(" + "H" + taxStartRow.ToString() + ":" + "H" + (xRow - 1).ToString() + ")";
+
+                } else
+                {
+                    oSheet.Cells[xRow, Rate] = "=SUM(" + "H" + taxStartRow.ToString() + ":" + "H" + (xRow - 1).ToString() + ")";
+
+                }
+
+                oSheet.Cells[xRow, Amount] = "=SUM(" + "J" + taxStartRow.ToString() + ":" + "J" + (xRow - 1).ToString() + ")";
+
+                //Disclamer
+
+
                 #endregion
-
-
-
-                ////Add table headers going cell by cell.
-                //oSheet.Cells[1, 2] = "First Name";
-                //oSheet.Cells[1, 3] = "Last Name";
-                //oSheet.Cells[1, 4] = "Full Name";
-                //oSheet.Cells[1, 5] = "Salary";
-                //oSheet.Cells[1, 6] = "Tax";
-
-                ////Format A1:D1 as bold, vertical alignment = center.
-                //oSheet.get_Range("A1", "D1").Font.Bold = true;
-                //oSheet.get_Range("A1", "D1").VerticalAlignment =
-                //Excel.XlVAlign.xlVAlignCenter;
-
-                //oSheet.get_Range("A1", "D1").Merge();
-                //// Create an array to multiple values at once.
-                //string[,] saNames = new string[5, 2];
-
-                //saNames[0, 0] = "John";
-                //saNames[0, 1] = "Smith";
-                //saNames[1, 0] = "Tom";
-                //saNames[1, 1] = "Brown";
-                //saNames[2, 0] = "Sue";
-                //saNames[2, 1] = "Thomas";
-                //saNames[3, 0] = "Jane";
-                //saNames[3, 1] = "Jones";
-                //saNames[4, 0] = "Adam";
-                //saNames[4, 1] = "Johnson";
-
-                ////Fill A2:B6 with an array of values (First and Last Names).
-                //oSheet.get_Range("A2", "B6").Value2 = saNames;
-
-                ////Fill C2:C6 with a relative formula (=A2 & " " & B2).
-                //oRng = oSheet.get_Range("C2", "C6");
-                //oRng.Formula = "=A2 & \" \" & B2";
-
-                ////Fill D2:D6 with a formula(=RAND()*100000) and apply format.
-                //oRng = oSheet.get_Range("D2", "D6");
-                //oRng.Formula = "=RAND()*100000";
-                //oRng.NumberFormat = "$0.00";
 
                 //AutoFit columns A:D.
                 oRng = oSheet.get_Range("A1", "J30");
