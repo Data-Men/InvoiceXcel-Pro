@@ -4,6 +4,7 @@ using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
 namespace Invoice
 {
+
     public partial class Home : Form
     {
 
@@ -14,8 +15,8 @@ namespace Invoice
 
         //Class Variables
         Dictionary<string, string> states = new Dictionary<string, string>();
-
-
+        
+        
         private void Home_Load(object sender, EventArgs e)
         {
             //Adding Value in Dictionary
@@ -95,21 +96,22 @@ namespace Invoice
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
                 //Invoice No
-                oSheet.Cells[xRow, 4] = "Invoice No: " + TxtInvoiceNo.Text;
-                oSheet.get_Range("D" + xRow.ToString(), "F" + (xRow + 1).ToString()).Merge();
-                oSheet.get_Range("D2", "F3").HorizontalAlignment =
-                Excel.XlHAlign.xlHAlignCenter;
-                oSheet.get_Range("D2", "F3").VerticalAlignment =
-                Excel.XlVAlign.xlVAlignCenter;
+
+                oSheet.Cells[xRow, 4] = "Invoice No: ";
+                oSheet.Cells[xRow+1, 4] =  TxtInvoiceNo.Text;
+                oSheet.get_Range("D3", "F3").Font.Bold = true;
+                oSheet.get_Range("D3", "F3").HorizontalAlignment =Excel.XlHAlign.xlHAlignLeft;
+                oSheet.get_Range("D2", "F3").Cells.BorderAround2();
                 //Date
                 DateTime dt = new DateTime();
                 dt = DatePicker.Value;
-                oSheet.Cells[xRow, 7] = "Dated " + dt.ToShortDateString();
-                oSheet.get_Range("G" + xRow.ToString(), "J" + (xRow + 1).ToString()).Merge();
-                oSheet.get_Range("G2", "J3").HorizontalAlignment =
-               Excel.XlHAlign.xlHAlignCenter;
-                oSheet.get_Range("G2", "J3").VerticalAlignment =
-                Excel.XlVAlign.xlVAlignCenter;
+                oSheet.Cells[xRow, 7] = "Dated ";
+                oSheet.Cells[xRow+1,7] = dt.ToShortDateString();
+                oSheet.get_Range("G3", "J3").Font.Bold = true;
+                oSheet.get_Range("G3", "J3").HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                oSheet.get_Range("G2", "J3").Cells.BorderAround2();
+                oSheet.get_Range("G3" , "J3" ).Merge();
+                
                 xRow = 3;
                 oSheet.Cells[xRow, 1] = "71, Triveni Nagar 1st, Jaipur";
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
@@ -118,6 +120,12 @@ namespace Invoice
                 oSheet.Cells[xRow, 1] = "Ph. - 8000262869";
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
+                oSheet.Cells[xRow, 4] = "Delivery Note";
+                oSheet.Cells[xRow, 7] = "Mode/Terms of Payment";
+                oSheet.get_Range("D" + xRow.ToString(), "F" + (xRow + 1).ToString()).Cells.BorderAround2();
+                
+                oSheet.get_Range("D" + xRow.ToString(), "F" + xRow.ToString()).Merge();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + xRow.ToString()).Merge();
                 xRow = 5;
                 oSheet.Cells[xRow, 1] = "GSTIN/UIN: 08HLVPD9817B1ZO";
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
@@ -126,40 +134,65 @@ namespace Invoice
                 oSheet.Cells[xRow, 1] = "State Name: Rajasthan, Code : 08";
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
+                oSheet.Cells[xRow, 4] = "Supplier's Ref.";
+                oSheet.Cells[xRow, 7] = "Other Reference(s)";
+                oSheet.get_Range("G" + xRow.ToString(), "J" + (xRow + 1).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("D" + xRow.ToString(), "F" + xRow.ToString()).Merge();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + xRow.ToString()).Merge();
                 xRow = 7;
                 oSheet.Cells[xRow, 1] = "E - Mail: ankitramola101 @gmail.com";
-                oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
-                oSheet.get_Range("A2", "C7").Cells.BorderAround2();
+
                 //lable
                 xRow = 8;
                 oSheet.Cells[xRow, 1] = "Bayer";
-                oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
-                oSheet.get_Range("A8", "C8").Cells.BorderAround2();
-
+                oSheet.Cells[xRow, 4] = "Buyer's Order No.";
+                oSheet.Cells[xRow, 7] = "Dated";
+                oSheet.get_Range("D" + xRow.ToString(), "F" + (xRow + 1).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("D" + xRow.ToString(), "F" + xRow.ToString()).Merge();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + xRow.ToString()).Merge();
                 //Buyer Address
                 xRow = 9;
                 oSheet.Cells[xRow, 1] = TxtCompanyName.Text;
                 oSheet.get_Range("A9", "c9").Font.Bold = true;
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
+
                 xRow = 10;
                 oSheet.Cells[xRow, 1] = TxtAddress.Text;
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
 
+                oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
+                oSheet.get_Range("A8", "C8").Cells.BorderAround2();
+
+                oSheet.Cells[xRow, 4] = "Despatch Document No.";
+                oSheet.Cells[xRow, 7] = "Delivery Note Date";
+                oSheet.get_Range("G" + xRow.ToString(), "J" + (xRow + 1).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("D" + xRow.ToString(), "F" + xRow.ToString()).Merge();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + xRow.ToString()).Merge();
                 xRow = 11;
                 oSheet.Cells[xRow, 1] = "E - Mail: " + TxtEmail.Text;
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
-
+                
                 xRow = 12;
                 oSheet.Cells[xRow, 1] = "State : " + CmbState.Text.ToString() + ", Code : " + TxtStateCode.Text;
                 oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
+                //oSheet.get_Range("A9", "C13").Cells.BorderAround2();
 
-                oSheet.get_Range("A9", "C13").Cells.BorderAround2();
-
+                oSheet.Cells[xRow, 4] = "Despatched through";
+                oSheet.Cells[xRow, 7] = "Destination";
+                oSheet.get_Range("D" + xRow.ToString(), "F" + (xRow + 1).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + (xRow + 3).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("D" + xRow.ToString(), "F" + xRow.ToString()).Merge();
+                oSheet.get_Range("G" + xRow.ToString(), "J" + xRow.ToString()).Merge();
                 xRow = 13;
-                oSheet.get_Range("A2", "J13").Cells.BorderAround2();
-
+                oSheet.Cells[xRow+1, 4] = "Terms of Delivery";
+                oSheet.get_Range("D" + (xRow+1).ToString(), "F" + (xRow + 2).ToString()).Cells.BorderAround2();
+                oSheet.get_Range("D" + (xRow + 1).ToString(), "F" + (xRow + 1).ToString()).Merge();
+                xRow = 15;
+                oSheet.get_Range("A2", "C15").Cells.BorderAround2();
+                oSheet.get_Range("A2", "J15").Cells.BorderAround2();
+                
                 //Grid Column
                 xRow += 1;
 
@@ -201,6 +234,7 @@ namespace Invoice
                 xCol += 1;
                 Amount = xCol;
                 oSheet.Cells[xRow, Amount] = "Amount";
+                oSheet.get_Range("A16", "J16").Cells.BorderAround2();
 
                 //Data Filling
                 xRow += 1;
@@ -213,8 +247,8 @@ namespace Invoice
                         oSheet.Cells[xRow, Srno] = dgRow.Cells[ColSrNo.Index].Value;
                         oSheet.Cells[xRow, Description] = dgRow.Cells[ColDescription.Index].Value;
                         oSheet.Cells[xRow, Hsn] = dgRow.Cells[ColHsn.Index].Value;
-                        oSheet.Cells[xRow, Gst] = dgRow.Cells[ColGst.Index].Value;
-                        oSheet.Cells[xRow, Pcs] = dgRow.Cells[ColPcs.Index].Value;
+                        oSheet.Cells[xRow, Gst] = isNull(dgRow.Cells[ColGst.Index].Value) ? 0 : dgRow.Cells[ColGst.Index].Value.ToString() + "%";
+                        oSheet.Cells[xRow, Pcs] = isNull(dgRow.Cells[ColPcs.Index].Value) ? 0 : dgRow.Cells[ColPcs.Index].Value.ToString()  ;
                         oSheet.Cells[xRow, SPrice] = dgRow.Cells[ColSalePrice.Index].Value;
                         oSheet.Cells[xRow, Rate] = dgRow.Cells[ColRate.Index].Value;
                         oSheet.Cells[xRow, Per] = "";
@@ -270,6 +304,8 @@ namespace Invoice
                 //Total PCs
                 oSheet.Cells[xRow, Pcs] = "=SUM(" + "E" + dataFillStartRow.ToString() + ":" + "E" + (xRow - 1).ToString() + ")";
 
+                oSheet.Range["F"+dataFillStartRow, "G"+xRow].NumberFormatLocal = "0.00";
+                oSheet.Range["J" + dataFillStartRow, "J" + xRow].NumberFormatLocal = "0.00";
 
                 oSheet.get_Range("A" + xRow.ToString(), "J" + xRow.ToString()).Font.Bold = true;
                 oSheet.get_Range("J" + dataFillStartRow.ToString(), "J" + xRow.ToString()).Font.Bold = true;
@@ -290,7 +326,8 @@ namespace Invoice
                 oSheet.Cells[xRow, Srno] = "Amount Chargeable (in words)";
 
                 xRow += 1;
-                oSheet.Cells[xRow, Srno] = "Indian Rupees Twenty Three Thousand Only";
+                oSheet.Cells[xRow, Srno] = CommonFunctions.ConvertToWords(oSheet.Cells[xRow-2, Amount].Text);
+                
                 oSheet.get_Range("A" + (xRow).ToString(), "J" + (xRow).ToString()).Font.Bold = true;
                 oSheet.get_Range("A" + (xRow - 1).ToString(), "J" + (xRow).ToString()).Cells.BorderAround2();
 
@@ -300,7 +337,7 @@ namespace Invoice
 
                 oSheet.Cells[xRow, Gst] = "Taxable Value";
                 oSheet.get_Range("D" + xRow.ToString(), "D" + (xRow + 2).ToString()).Merge();
-
+                oSheet.get_Range("D" + xRow.ToString(), "D" + (xRow + 2).ToString()).WrapText=true;
 
                 //Central tax
                 if (!ChkIGST.Checked)
@@ -328,13 +365,21 @@ namespace Invoice
                 {
                     oSheet.Cells[xRow, Pcs] = "Inter State Tax";
                     oSheet.get_Range("E" + xRow.ToString(), "I" + (xRow).ToString()).Merge();
-                    oSheet.get_Range("E" + (xRow).ToString(), "I" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
+                    oSheet.Cells[xRow + 1, Pcs] = "Rate";
+                    oSheet.Cells[xRow + 1, Rate] = "Amount";
+                    oSheet.get_Range("E" + (xRow + 1).ToString(), "F" + (xRow + 2).ToString()).Merge();
+                    oSheet.get_Range("G" + (xRow+1).ToString(), "I" + (xRow+2).ToString()).Merge();
+                    oSheet.get_Range("G" + (xRow).ToString(), "I" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
                 }
 
                 //Total Tax
                 oSheet.Cells[xRow, Amount] = "Total Tax Amount";
                 oSheet.get_Range("J" + xRow.ToString(), "J" + (xRow + 2).ToString()).Merge();
+                oSheet.get_Range("J" + xRow.ToString(), "J" + (xRow + 2).ToString()).WrapText=true;
 
+
+                oSheet.get_Range("A" + xRow.ToString(), "J" + (xRow + 2).ToString()).VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;                
+                oSheet.get_Range("A" + xRow.ToString(), "J" + (xRow + 2).ToString()).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
                 //Tax Calculation
                 xRow += 3;
                 int taxStartRow = xRow;
@@ -343,7 +388,10 @@ namespace Invoice
                     if (dgRow.Index > 0)
                     {
                         oSheet.Cells[xRow, Srno] = dgRow.Cells[ColHsn.Index].Value;
-                        oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
+                        oSheet.get_Range("A" + xRow.ToString(), "C" + (xRow).ToString()).Merge();
+                        oSheet.get_Range("A" + (xRow + 1).ToString(), "C" + (xRow+1).ToString()).Merge();
+
+                        oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).HorizontalAlignment=Excel.XlHAlign.xlHAlignLeft;
 
                         oSheet.Cells[xRow, Gst] = dgRow.Cells[ColAmount.Index].Value;
                         if (!ChkIGST.Checked)
@@ -352,19 +400,23 @@ namespace Invoice
                             oSheet.Cells[xRow, Pcs] = float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 2;
                             oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 200;
                             //state
-                            oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 2;
+                            oSheet.Cells[xRow, Rate] = float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 2;
                             oSheet.Cells[xRow, Per] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 200;
-
-                            //total
-                            oSheet.Cells[xRow, Amount] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
-
+                            oSheet.get_Range("H" + xRow.ToString(), "I" + (xRow).ToString()).Merge();
+                            oSheet.get_Range("H" + (xRow + 1).ToString(), "I" + (xRow + 1).ToString()).Merge();
                         }
                         else
                         {
                             oSheet.Cells[xRow, Pcs] = dgRow.Cells[ColGst.Index].Value;
-                            oSheet.Cells[xRow, SPrice] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
+                            oSheet.Cells[xRow, Per] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
+                            oSheet.get_Range("G" + xRow.ToString(), "I" + (xRow).ToString()).Merge();
+                            oSheet.get_Range("G" + (xRow + 1).ToString(), "I" + (xRow + 1).ToString()).Merge();
+                            oSheet.get_Range("E" + xRow.ToString(), "F" + (xRow).ToString()).Merge();
+                            oSheet.get_Range("E" + (xRow + 1).ToString(), "F" + (xRow+1).ToString()).Merge();
                         }
 
+                        //total
+                        oSheet.Cells[xRow, Amount] = float.Parse((string)dgRow.Cells[ColAmount.Index].Value) * float.Parse((string)dgRow.Cells[ColGst.Index].Value) / 100;
 
                         xRow += 1;
                     }
@@ -372,27 +424,24 @@ namespace Invoice
 
                 //Tax Total 
                 oSheet.Cells[xRow, Srno] = "Total";
-                oSheet.get_Range("A" + xRow.ToString(), "C" + xRow.ToString()).Merge();
-
-
+                
                 oSheet.Cells[xRow, Gst] = "=SUM(" + "D" + taxStartRow.ToString() + ":" + "D" + (xRow - 1).ToString() + ")";
 
                 if (!ChkIGST.Checked)
                 {
                     oSheet.Cells[xRow, SPrice] = "=SUM(" + "F" + taxStartRow.ToString() + ":" + "F" + (xRow - 1).ToString() + ")";
-                    oSheet.Cells[xRow, Pcs] = "=SUM(" + "H" + taxStartRow.ToString() + ":" + "H" + (xRow - 1).ToString() + ")";
+                    oSheet.Cells[xRow, Per] = "=SUM(" + "H" + taxStartRow.ToString() + ":" + "H" + (xRow - 1).ToString() + ")";
 
                 }
                 else
                 {
-                    oSheet.Cells[xRow, Rate] = "=SUM(" + "H" + taxStartRow.ToString() + ":" + "H" + (xRow - 1).ToString() + ")";
-
+                    oSheet.Cells[xRow, Rate] = "=SUM(" + "G" + taxStartRow.ToString() + ":" + "G" + (xRow - 1).ToString() + ")";
                 }
 
                 oSheet.Cells[xRow, Amount] = "=SUM(" + "J" + taxStartRow.ToString() + ":" + "J" + (xRow - 1).ToString() + ")";
 
+                oSheet.Range["D" + taxStartRow, "J" + xRow].NumberFormatLocal = "0.00";
                 oSheet.get_Range("A" + xRow.ToString(), "J" + xRow.ToString()).Font.Bold = true;
-
                 oSheet.get_Range("A" + (taxStartRow - 3).ToString(), "J" + (xRow).ToString()).Cells.Borders.Weight = Excel.XlBorderWeight.xlThin;
 
                 //Disclamer
@@ -400,8 +449,8 @@ namespace Invoice
                 oSheet.get_Range("A" + (xRow).ToString(), "J" + (xRow + 9).ToString()).Cells.BorderAround2();
 
 
-                oSheet.Cells[xRow, Srno] = "Tax Amount (in words) : Indian Rupees Three Thousands Five Hundred Eight and Fourty Six Paisa Only";
-                xRow += 2;
+                oSheet.Cells[xRow, Srno] = "Tax Amount (in words) :"+CommonFunctions.ConvertToWords(oSheet.Cells[xRow-1, Amount].Text);
+                xRow += 1;
                 oSheet.Cells[xRow, Srno] = "company's PAN : " + "HLVPD9817B";
                 //oSheet.Cells[xRow, Description] = "HLVPD9817B";
                 oSheet.get_Range("B" + xRow.ToString(), "B" + xRow.ToString()).Font.Bold = true;
@@ -423,12 +472,9 @@ namespace Invoice
                 #endregion
 
                 //AutoFit columns A:D.
-                oRng = oSheet.get_Range("A1", "J30");
-                oRng.EntireColumn.AutoFit();
+               // oRng = oSheet.get_Range("A1", "J30");
+                //oRng.EntireColumn.AutoFit();
 
-
-                //Make sure Excel is visible and give the user control
-                //of Microsoft Excel's lifetime.
                 oXL.Visible = true;
                 oXL.UserControl = true;
             }
@@ -622,5 +668,8 @@ namespace Invoice
                 return 1;
             }
         }
+
+       
+
     }
 }
