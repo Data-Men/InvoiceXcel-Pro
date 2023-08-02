@@ -59,6 +59,7 @@
             ColDiscountP = new DataGridViewTextBoxColumn();
             ColAmount = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
+            ChkIGST = new CheckBox();
             label7 = new Label();
             TxtStateCode = new TextBox();
             CmbState = new ComboBox();
@@ -71,7 +72,6 @@
             MainPanel = new Panel();
             panel3 = new Panel();
             BtnReset = new Button();
-            ChkIGST = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)DgvMain).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -86,7 +86,7 @@
             BtnExport.Name = "BtnExport";
             BtnExport.Size = new Size(126, 45);
             BtnExport.TabIndex = 0;
-            BtnExport.Text = "Export";
+            BtnExport.Text = "&Export";
             BtnExport.UseVisualStyleBackColor = true;
             BtnExport.Click += BtnExport_Click;
             // 
@@ -199,6 +199,7 @@
             DgvMain.RowTemplate.Height = 33;
             DgvMain.Size = new Size(1366, 571);
             DgvMain.TabIndex = 0;
+            DgvMain.CellValueChanged += DgvMain_CellValueChanged;
             DgvMain.KeyDown += DgvMain_KeyDown;
             // 
             // ColSrNo
@@ -328,6 +329,16 @@
             panel1.Size = new Size(1371, 133);
             panel1.TabIndex = 10;
             // 
+            // ChkIGST
+            // 
+            ChkIGST.AutoSize = true;
+            ChkIGST.Location = new Point(282, 97);
+            ChkIGST.Name = "ChkIGST";
+            ChkIGST.Size = new Size(61, 24);
+            ChkIGST.TabIndex = 15;
+            ChkIGST.Text = "IGST";
+            ChkIGST.UseVisualStyleBackColor = true;
+            // 
             // label7
             // 
             label7.AutoSize = true;
@@ -445,16 +456,6 @@
             BtnReset.Text = "Reset";
             BtnReset.UseVisualStyleBackColor = true;
             BtnReset.Click += BtnReset_Click;
-            // 
-            // ChkIGST
-            // 
-            ChkIGST.AutoSize = true;
-            ChkIGST.Location = new Point(282, 97);
-            ChkIGST.Name = "ChkIGST";
-            ChkIGST.Size = new Size(61, 24);
-            ChkIGST.TabIndex = 15;
-            ChkIGST.Text = "IGST";
-            ChkIGST.UseVisualStyleBackColor = true;
             // 
             // Home
             // 
